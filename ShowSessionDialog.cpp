@@ -35,6 +35,7 @@ ShowSessionDialog::ShowSessionDialog(int id, QSqlQuery *q, QWidget *parent) :
 
     int indexHall = query->value("hall").toInt();
     QString nameFilm = query->value("name").toString();
+    ui->SessionName->setText(nameFilm);
 
     ui->dateSessionEdit->setDate(QDate::fromString(query->value("date").toString(), "yyyy-MM-dd"));
 
