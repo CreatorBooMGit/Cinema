@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file>Scheme.qml</file>
+        <file>Place.qml</file>
+    </qresource>
+</RCC>

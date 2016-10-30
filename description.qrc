@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/description">
+        <file>decriptionSettingPlace.txt</file>
+    </qresource>
+</RCC>

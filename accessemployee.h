@@ -1,0 +1,5 @@
+#ifndef ACCESSEMPLOYEE
+#define ACCESSEMPLOYEE
+
+#endif // ACCESSEMPLOYEE
+

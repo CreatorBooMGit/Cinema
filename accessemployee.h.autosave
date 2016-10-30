@@ -1,0 +1,12 @@
+#ifndef ACCESSEMPLOYEE
+#define ACCESSEMPLOYEE
+
+#include <QSqlQuery>
+
+bool access(QSqlQuery *query)
+{
+    query->bindValue("SELECT ");
+}
+
+#endif // ACCESSEMPLOYEE
+
