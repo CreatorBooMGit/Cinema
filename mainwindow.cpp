@@ -60,7 +60,10 @@ MainWindow::MainWindow(QWidget *parent) :
     AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(infoUser, query, this);
 //    authDialog->setModal(true);
     authDialog->exec();
+    delete authDialog;
 #endif
+
+    access = new Access(infoUser->login, query);
 
     connect(ui->actionSettings, SIGNAL(triggered()), this, SLOT(settShow()));
 
@@ -204,6 +207,8 @@ void MainWindow::on_actionLogout_triggered()
     AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(infoUser, query, this);
 //    authDialog->setModal(true);
     authDialog->exec();
+    delete authDialog;
+    loginStatusLabel->setText("<img width=\"15\" height=\"15\" src=\":/icons/icons/user.ico\"/> " + infoUser->login);
 }
 
 void MainWindow::onTableContextMenu(QPoint p)

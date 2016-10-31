@@ -152,20 +152,30 @@ void ShowSessionDialog::on_buyButton_clicked()
 
     for(int i = 0; i < tickets.size(); i++)
     {
-        query->prepare("UPDATE `cinema`.`tickets` SET `status`='6' WHERE `id_ticket`='82';"
-                       "VALUES (:session, :place, :status)");
+        query->prepare("UPDATE `tickets` "
+                       "SET `status` = :status "
+                       "WHERE `session` = :session AND `place` = :place");
         query->bindValue(":session", indexSession);
         query->bindValue(":place", tickets[i].id_place);
         query->bindValue(":status", HallQml::StatusSold);
         query->exec();
 
+        query->prepare("SELECT `tickets`.`id_ticket` "
+                       "FROM `tickets` "
+                       "WHERE `tickets`.`session` = :session AND `tickets`.`place` = :place");
+        query->bindValue(":session", indexSession);
+        query->bindValue(":place", tickets[i].id_place);
+        query->exec();
+        query->next();
+
         query->prepare("INSERT INTO `traffic_tickets` (`date`, `time`, `ticket`, `operation`, `employee`) "
                        "VALUES (:date, :time, :ticket, :operation, :employee)");
         query->bindValue(":date", QDate::currentDate().toString("yyyy-MM-dd"));
         query->bindValue(":time", QTime::currentTime().toString("HH:mm:ss"));
-        query->bindValue(":ticket", query->lastInsertId().toInt());
+        query->bindValue(":ticket", query->value("id_ticket").toInt());
         query->bindValue(":operation", TicketOperations::operationSold);
         query->bindValue(":employee", infoUser->idlogin);
+        qDebug() << query->boundValues();
         query->exec();
     }
     reject();

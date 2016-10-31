@@ -11,6 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Cinema
 TEMPLATE = app
 
+QMAKE_CXXFLAGS += -std=gnu++14
+
+include($$PWD/QtRptProject/QtRPT/QtRPT.pri)
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -100,7 +103,8 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     icons.qrc \
-    HallScheme/qml.qrc
+    HallScheme/qml.qrc \
+    reports.qrc
 
 DISTFILES +=
 
