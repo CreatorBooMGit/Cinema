@@ -152,7 +152,7 @@ void ShowSessionDialog::on_buyButton_clicked()
 
     for(int i = 0; i < tickets.size(); i++)
     {
-        query->prepare("INSERT INTO `tickets` (`session`, `place`, `status`) "
+        query->prepare("UPDATE `cinema`.`tickets` SET `status`='6' WHERE `id_ticket`='82';"
                        "VALUES (:session, :place, :status)");
         query->bindValue(":session", indexSession);
         query->bindValue(":place", tickets[i].id_place);
