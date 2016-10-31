@@ -34,7 +34,7 @@
        <item>
         <widget class="QLabel" name="SessionName">
          <property name="text">
-          <string>TextLabel</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; color:#00007f;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -59,6 +59,19 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QLabel" name="dateSessionLabel">
          <property name="text">
           <string>Дата сеанса</string>
@@ -82,8 +95,17 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="wrapping">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>true</bool>
+         </property>
          <property name="readOnly">
           <bool>true</bool>
+         </property>
+         <property name="showGroupSeparator" stdset="0">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -144,6 +166,13 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Билеты</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QListWidget" name="ticketsList">
          <property name="minimumSize">
           <size>
@@ -193,7 +222,7 @@
         </size>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string>Подтвердить</string>
        </property>
       </widget>
      </item>
@@ -212,7 +241,7 @@
         </size>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string>Отмена</string>
        </property>
       </widget>
      </item>

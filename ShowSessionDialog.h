@@ -19,8 +19,12 @@ public:
     ~ShowSessionDialog();
 
 public slots:
-    void getCheckedPlace(int s_g_place, int s_row, int s_sectorIndex);
-    void getUncheckedPlace(int s_g_place, int s_row, int s_sectorIndex);
+    void getCheckedPlace(int id_place, int g_place, int row);
+    void getUncheckedPlace(int s_g_place, int s_row);
+
+private slots:
+    void on_cancelButton_clicked();
+    void on_buyButton_clicked();
 
 private:
     Ui::ShowSessionDialog *ui;
@@ -30,9 +34,9 @@ private:
     int indexSession;
 
     struct ticket {
+        int id_place;
         int g_place;
         int row;
-        int sectorIndex;
     };
 
     QVector <ticket> tickets;
@@ -40,6 +44,10 @@ private:
 
     void updateSectors();
 
+
+    // QWidget interface
+protected:
+    virtual void closeEvent(QCloseEvent *event);
 };
 
 #endif // SHOWSESSIONDIALOG_H

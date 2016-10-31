@@ -361,7 +361,7 @@ bool SettingHallQML::receiveCheckedPlace(int g_place, int row)
     if(places[row][g_place].status == HallQml::StatusFree)
     {
         places[row][g_place].status = HallQml::StatusChecked;
-        emit checkedPlace(g_place, row, places[row][g_place].sectorId);
+        emit checkedPlace(places[row][g_place].idPlace, g_place, row);
         return true;
     }
     return false;
@@ -372,7 +372,7 @@ bool SettingHallQML::receiveUncheckedPlace(int g_place, int row)
     if(places[row][g_place].status != HallQml::StatusFree)
     {
         places[row][g_place].status = HallQml::StatusFree;
-        emit uncheckedPlace(g_place, row, places[row][g_place].sectorId);
+        emit uncheckedPlace(g_place, row);
         return false;
     }
     return true;

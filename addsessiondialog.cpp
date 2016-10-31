@@ -42,6 +42,8 @@ AddSessionDialog::~AddSessionDialog()
 
 void AddSessionDialog::on_hallComboBox_currentIndexChanged(int index)
 {
+    sectors.clear();
+
     query->prepare("SELECT sectors_halls.id_sector, sectors_halls.name "
                    "FROM sectors_halls "
                    "WHERE hall = :hall");
@@ -55,14 +57,15 @@ void AddSessionDialog::on_hallComboBox_currentIndexChanged(int index)
         tmp.name = query->value("name").toString();
         tmp.price = 0;
         sectors.push_back(tmp);
+
         QTableWidgetItem *itemName = new QTableWidgetItem;
         QTableWidgetItem *itemPrice = new QTableWidgetItem;
         itemName->setText(tmp.name);
         itemPrice->setText(QString::number(tmp.price));
-        itemName->setFlags(Qt::ItemIsEnabled  | Qt::ItemIsSelectable);
-        itemPrice->setFlags(Qt::ItemIsEnabled  | Qt::ItemIsSelectable);
-        ui->priceTable->setItem(sectors.size(), 0, itemName);
-        ui->priceTable->setItem(sectors.size(), 1, itemPrice);
+        itemName->setFlags(Qt::ItemIsEnabled);
+        itemPrice->setFlags(Qt::ItemIsEnabled  | Qt::ItemIsSelectable | Qt::ItemIsEditable);
+        ui->priceTable->setItem(sectors.size() - 1, 0, itemName);
+        ui->priceTable->setItem(sectors.size() - 1, 1, itemPrice);
     }
 }
 
@@ -83,8 +86,9 @@ void AddSessionDialog::on_addButton_clicked()
     {
         int lastSession = query->lastInsertId().toInt();
         query->prepare("SELECT places.id_place "
-                       "FROM places, sectors, halls "
-                       "WHERE halls.id_hall = sectors_halls.hall AND sectors_halls.id_sector = places.sector");
+                       "FROM places, sectors_halls "
+                       "WHERE sectors_halls.id_sector = places.sector AND sectors_halls.hall = :hall");
+        query->bindValue(":hall", halls[ui->hallComboBox->currentIndex()].idHall);
         if(query->exec())
         {
             QVector<int> placesId;
@@ -99,9 +103,19 @@ void AddSessionDialog::on_addButton_clicked()
                 query->bindValue(":place", placesId[i]);
                 query->bindValue(":status", HallQml::StatusFree);
                 query->exec();
-                close();
             }
         }
+
+        for(int i = 0; i < sectors.size(); i++)
+        {
+            query->prepare("INSERT INTO `price_of_tickets` (`session`, `sector`, `price`) "
+                           "VALUES (:session, :sector, :price)");
+            query->bindValue(":session", lastSession);
+            query->bindValue(":sector", sectors[i].idSector);
+            query->bindValue(":price", sectors[i].price);
+            query->exec();
+        }
+        close();
     }
     else
     {
@@ -115,4 +129,9 @@ void AddSessionDialog::on_addButton_clicked()
 void AddSessionDialog::on_cancelButton_clicked()
 {
     close();
+}
+
+void AddSessionDialog::on_priceTable_itemChanged(QTableWidgetItem *item)
+{
+    sectors[item->row()].price = item->text().toDouble();
 }

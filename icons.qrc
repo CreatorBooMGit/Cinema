@@ -16,5 +16,9 @@
         <file>HallScheme/checked.ico</file>
         <file>HallScheme/person.ico</file>
         <file>icons/time.ico</file>
+        <file>icons/calendar.ico</file>
+        <file>icons/clock.ico</file>
+        <file>icons/host.ico</file>
+        <file>icons/user.ico</file>
     </qresource>
 </RCC>

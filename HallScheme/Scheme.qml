@@ -15,7 +15,7 @@ Rectangle {
     property int checkedSectorIndex: -1
     property string checkedSectorColor: "#fff"
 
-//    property bool settingMode: true
+    property bool settingMode: true
 
     Connections {
         target: hallCore
@@ -29,9 +29,9 @@ Rectangle {
             countSectors = s_countSectors;
         }
 
-//        onSendSettingMode: {
-//            settingMode = s_mode;
-//        }
+        onSendSettingMode: {
+            settingMode = s_mode;
+        }
 
         onSendDefaultSector: {
             scheme.checkedSectorIndex = s_id;
@@ -137,6 +137,7 @@ Rectangle {
                     }
                     MouseArea {
                         id: sectorMouseArea
+                        enabled: settingMode
                         anchors.fill: parent
                         hoverEnabled: true
 

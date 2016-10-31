@@ -109,8 +109,8 @@ Rectangle {
         enabled: place <= 0 ? visibleUnsignedPlace : true
 
         onClicked: {
-//            console.log("before --- ", "place: ", place, "g_place: ", g_place, "row: ", row, "sector:", sectorIndex);
-            if(settingMode)
+            console.log("before --- ", "place: ", place, "g_place: ", g_place, "row: ", row, "sector:", sectorIndex, "status:", status);
+            if(settingMode === true)
             {
                 if(mouse.button & Qt.LeftButton)
                 {
@@ -126,27 +126,27 @@ Rectangle {
                         hallCore.receiveUnCheckedPlace(g_place, row);
                     }
             }
-            else
+
+            if(settingMode === false)
             {
                 if(mouse.button & Qt.LeftButton && status === statusFree)
                 {
                     root.isChecked = hallCore.receiveCheckedPlace(g_place, row);
                     if(isChecked)
                     {
-                        status = statusChecked
+                        status = statusChecked;
                     }
                 }
                 else
                     if(mouse.button & Qt.RightButton && status === statusChecked)
                     {
                         root.isChecked = hallCore.receiveUncheckedPlace(g_place, row);
-                        if(isChecked)
+                        if(!isChecked)
                         {
-                            status = statusFree
+                            status = statusFree;
                         }
                     }
             }
-
 //            console.log("after --- ", "place: ", place, "g_place: ", g_place, "row: ", row, "sector:", sectorIndex);
         }
     }

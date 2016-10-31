@@ -63,8 +63,6 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
 
     connect(ui->actionSettings, SIGNAL(triggered()), this, SLOT(settShow()));
-//    connect(ui->actionLogin, SIGNAL(triggered()), this, SLOT(authShow()));
-//    connect(ui->dateFilter, SIGNAL(dateChanged(QDate)), this, SLOT()));
 
     ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tableWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(onTableContextMenu(QPoint)));
@@ -80,28 +78,26 @@ MainWindow::MainWindow(QWidget *parent) :
     dateStatusLabel = new QLabel(this);
     timeStatusLabel = new QLabel(this);
 
-    hostStatusIcon= new QLabel(this);
-    loginStatusIcon= new QLabel(this);
-    dateStatusIcon = new QLabel(this);
-    timeStatusIcon = new QLabel(this);
+    hostStatusLabel->setMinimumWidth(120);
+    hostStatusLabel->setAlignment(Qt::AlignVCenter);
+    loginStatusLabel->setMinimumWidth(120);
+    loginStatusLabel->setAlignment(Qt::AlignVCenter);
+    dateStatusLabel->setMinimumWidth(120);
+    dateStatusLabel->setAlignment(Qt::AlignVCenter);
+    timeStatusLabel->setMinimumWidth(120);
+    timeStatusLabel->setAlignment(Qt::AlignVCenter);
 
-    QHBoxLayout *horizontalLayoutTime = new QHBoxLayout(this);
-    horizontalLayoutTime->addWidget(timeStatusIcon);
-    horizontalLayoutTime->addWidget(timeStatusLabel);
-
-    ui->statusBar->addWidget(hostStatusLabel);
-    ui->statusBar->addWidget(loginStatusLabel);
-    ui->statusBar->addWidget(dateStatusLabel);
-    ui->statusBar->addWidget(horizontalLayoutTime);
+    ui->statusBar->addWidget(hostStatusLabel, 0);
+    ui->statusBar->addWidget(loginStatusLabel, 0);
+    ui->statusBar->addWidget(dateStatusLabel, 0);
+    ui->statusBar->addWidget(timeStatusLabel, 0);
 
     settings->beginGroup("Database");
-    hostStatusLabel->setText(settings->value("host").toString());
+    hostStatusLabel->setText("<img width=\"15\" height=\"15\" src=\":/icons/icons/host.ico\"/> " + settings->value("host").toString());
     settings->endGroup();
 
-    loginStatusLabel->setText(infoUser.login);
+    loginStatusLabel->setText("<img width=\"15\" height=\"15\" src=\":/icons/icons/user.ico\"/> " + infoUser.login);
 
-    QPixmap pix(":/icons/icons/time.ico");
-    timeStatusIcon->setPixmap(pix.scaled(20, 20));
     timeTimer = new QTimer(this);
     connect(timeTimer, SIGNAL(timeout()), this, SLOT(updateTimeStatusBar()));
     timeTimer->start(1000);
@@ -347,6 +343,6 @@ void MainWindow::on_tableWidget_doubleClicked(const QModelIndex &index)
 
 void MainWindow::updateTimeStatusBar()
 {
-    timeStatusLabel->setText(QTime::currentTime().toString("HH:mm:ss"));
-    dateStatusLabel->setText(QDate::currentDate().toString("dd.MM.yyyy"));
+    timeStatusLabel->setText("<img width=\"15\" height=\"15\" src=\":/icons/icons/calendar.ico\"/> " + QTime::currentTime().toString("HH:mm:ss"));
+    dateStatusLabel->setText("<img width=\"15\" height=\"15\" src=\":/icons/icons/clock.ico\"/> " + QDate::currentDate().toString("dd.MM.yyyy"));
 }

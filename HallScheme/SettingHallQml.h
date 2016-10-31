@@ -57,8 +57,8 @@ signals:
     void sendStatus(int s_g_place, int s_row, int s_status);
 
 signals:
-    void checkedPlace(int s_g_place, int s_row, int s_sectorIndex);
-    void uncheckedPlace(int s_g_place, int s_row, int s_sectorIndex);
+    void checkedPlace(int id_place, int g_place, int row);
+    void uncheckedPlace(int g_place, int row);
 
 public slots:
     int getSectorId(int index);

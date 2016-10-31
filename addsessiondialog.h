@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QSqlQuery>
+#include <QTableWidget>
 
 namespace Ui {
 class AddSessionDialog;
@@ -21,6 +22,7 @@ private slots:
     void on_hallComboBox_activated(int index);
     void on_addButton_clicked();
     void on_cancelButton_clicked();
+    void on_priceTable_itemChanged(QTableWidgetItem *item);
 
 private:
     Ui::AddSessionDialog *ui;
