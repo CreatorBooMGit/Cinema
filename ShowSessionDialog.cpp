@@ -5,6 +5,7 @@
 #include <QQmlContext>
 #include <QQuickView>
 #include <QDebug>
+#include <qtrpt.h>
 
 ShowSessionDialog::ShowSessionDialog(user *info, int id, QSqlQuery *q, QWidget *parent) :
     QDialog(parent), indexSession(id), query(q), infoUser(info),
@@ -14,7 +15,7 @@ ShowSessionDialog::ShowSessionDialog(user *info, int id, QSqlQuery *q, QWidget *
 
     hallCore = new SettingHallQML(this);
 
-    connect(hallCore, SIGNAL(checkedPlace(int,int,int)), this, SLOT(getCheckedPlace(int,int,int)));
+    connect(hallCore, SIGNAL(checkedPlace(int,int,int,int,int)), this, SLOT(getCheckedPlace(int,int,int,int,int)));
     connect(hallCore, SIGNAL(uncheckedPlace(int,int)), this, SLOT(getUncheckedPlace(int,int)));
 
     QQuickView *view = new QQuickView;
@@ -38,10 +39,13 @@ ShowSessionDialog::ShowSessionDialog(user *info, int id, QSqlQuery *q, QWidget *
     query->next();
 
     int indexHall = query->value("hall").toInt();
-    QString nameFilm = query->value("name").toString();
+    nameFilm = query->value("name").toString();
     ui->SessionName->setText("<html><head/><body><p><span style=\" font-size:16pt; color:#00007f;\">" + nameFilm + "</span></p></body></html>");
 
     ui->dateSessionEdit->setDate(QDate::fromString(query->value("date").toString(), "yyyy-MM-dd"));
+    ui->timeSessionEdit->setTime(QTime::fromString(query->value("time").toString(), "HH:mm:ss"));
+    dateSession = query->value("date").toDate().toString("dd.MM.yyyy");
+    timeSession = query->value("time").toTime().toString("HH:mm:ss");
 
 // ##################### Information from table @halls@ #########################
     query->prepare("SELECT * FROM halls "
@@ -50,6 +54,8 @@ ShowSessionDialog::ShowSessionDialog(user *info, int id, QSqlQuery *q, QWidget *
     query->exec();
 
     query->next();
+
+    nameHall = query->value("name").toString();
     hallCore->setSizeHall(query->value("rowCount").toInt(), query->value("columnCount").toInt());
 
 //    ################### Information about sectors ##########################
@@ -62,8 +68,8 @@ ShowSessionDialog::ShowSessionDialog(user *info, int id, QSqlQuery *q, QWidget *
 
     while(query->next())
     {
-        qDebug() << query->value("id_sector").toInt();
         hallCore->addSector(query->value("id_sector").toInt(), query->value("price").toString(), query->value("name").toString(), query->value("color_places").toString());
+        sectorsPrice.push_back(query->value("price").toDouble());
     }
 
     sectors = hallCore->getSectors();
@@ -92,6 +98,16 @@ ShowSessionDialog::ShowSessionDialog(user *info, int id, QSqlQuery *q, QWidget *
         }
     }
     hallCore->sendStatus();
+
+//    ##################################### Information about Cinema #########################################
+    query->prepare("SELECT * "
+                   "FROM cinema_information");
+    query->exec();
+    query->next();
+
+    cinemaName = query->value("cinemaName").toString();
+    cinemaAddress = query->value("cinemaAddress").toString();
+    cinemaPhone = query->value("cinemaPhone").toString();
 }
 
 ShowSessionDialog::~ShowSessionDialog()
@@ -99,14 +115,16 @@ ShowSessionDialog::~ShowSessionDialog()
     delete ui;
 }
 
-void ShowSessionDialog::getCheckedPlace(int id_place, int g_place, int row)
+void ShowSessionDialog::getCheckedPlace(int id_place, int place, int g_place, int row, int sectorId)
 {
     ticket tmp;
     tmp.id_place = id_place;
+    tmp.place = place;
     tmp.g_place = g_place;
     tmp.row = row;
+    tmp.sectorId = sectorId;
     tickets.push_back(tmp);
-    ui->ticketsList->addItem(tr("Ряд: %1 Місце: %2").arg(row).arg(g_place));
+    ui->ticketsList->addItem(tr("Ряд: %1 Місце: %2").arg(row).arg(place));
 }
 
 void ShowSessionDialog::getUncheckedPlace(int s_g_place, int s_row)
@@ -168,15 +186,62 @@ void ShowSessionDialog::on_buyButton_clicked()
         query->exec();
         query->next();
 
+        tickets[i].id_ticket = query->value("id_ticket").toInt();
+
         query->prepare("INSERT INTO `traffic_tickets` (`date`, `time`, `ticket`, `operation`, `employee`) "
                        "VALUES (:date, :time, :ticket, :operation, :employee)");
         query->bindValue(":date", QDate::currentDate().toString("yyyy-MM-dd"));
         query->bindValue(":time", QTime::currentTime().toString("HH:mm:ss"));
-        query->bindValue(":ticket", query->value("id_ticket").toInt());
+        query->bindValue(":ticket", tickets[i].id_ticket);
         query->bindValue(":operation", TicketOperations::operationSold);
         query->bindValue(":employee", infoUser->idlogin);
-        qDebug() << query->boundValues();
         query->exec();
     }
+/*
+    QtRPT *ticket = new QtRPT(this);
+    ticket->recordCount << tickets.size();
+    ticket->loadReport(":/reports/reports/ticket.xml");
+
+    connect(ticket, &QtRPT::setValue, [&](const int recNo,
+            const QString paramName, QVariant &paramValue,
+            const int reportPage) {
+        (void) reportPage;
+        if(paramName == "ticket") {
+            paramValue = tickets[recNo].id_ticket;
+        }
+        if(paramName == "film") {
+            paramValue = nameFilm;
+        }
+        if(paramName == "hall") {
+            paramValue = nameHall;
+        }
+        if(paramName == "date") {
+            paramValue = dateSession;
+        }
+        if(paramName == "time") {
+            paramValue = timeSession;
+        }
+        if(paramName == "row") {
+            paramValue = tickets[recNo].row;
+        }
+        if(paramName == "place") {
+            paramValue = tickets[recNo].place;
+        }
+        if(paramName == "price") {
+            paramValue = sectorsPrice[tickets[recNo].sectorId - 1];
+        }
+        if(paramName == "cinemaName") {
+            paramValue = cinemaName;
+        }
+        if(paramName == "cinemaAddress") {
+            paramValue = cinemaAddress;
+        }
+        if(paramName == "cinemaPhone") {
+            paramValue = cinemaPhone;
+        }
+    });
+
+    ticket->printExec(); */
+
     reject();
 }

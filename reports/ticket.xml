@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Reports lib="QtRPT" programmer="Aleksey Osipov" email="aliks-os@ukr.net">
   <Report borderColor="" marginsLeft="40" marginsBottom="40" borderWidth="1" pageWidth="840" pageNo="1" pageHeight="1188" marginsRight="40" orientation="0" border="0" borderStyle="" marginsTop="40">
-    <ReportBand height="400" top="40" left="40" width="760" name="MasterDataBand" type="MasterData">
+    <ReportBand height="450" top="277" left="40" width="760" name="MasterDataBand" type="MasterData">
       <TContainerField left="0" borderBottom="" type="reactangle" printing="1" fontSize="10" aligmentH="hLeft" borderTop="" fontBold="0" borderRight="" fontItalic="0" backgroundColor="rgba(255,255,255,255)" fontFamily="MS Shell Dlg 2" borderColor="rgba(0,0,0,255)" fontUnderline="0" fontStrikeout="0" aligmentV="vCenter" borderStyle="/**/" borderWidth="1px" value="" top="1" autoHeight="0" height="400" fontColor="rgba(0,0,0,255)" name="reactangle1" borderLeft="" width="760" groupName=""/>
       <TContainerField left="1" borderBottom="rgba(255,255,255,0)" type="label" printing="1" fontSize="12" aligmentH="hCenter" format="" borderTop="rgba(255,255,255,0)" fontBold="0" borderRight="rgba(255,255,255,0)" fontItalic="0" backgroundColor="rgba(255,255,255,255)" textWrap="1" fontFamily="MS Shell Dlg 2" borderColor="rgba(0,0,0,255)" aligmentV="vCenter" fontUnderline="0" fontStrikeout="0" borderStyle="solid" borderWidth="1px" value="Квиток №[ticket]" top="0" autoHeight="0" height="30" fontColor="rgba(0,0,0,255)" highlighting="" name="ticketNumberField" borderLeft="rgba(255,255,255,0)" width="759" groupName=""/>
-      <TContainerField left="405" borderBottom="rgba(0,0,0,255)" type="barcode" printing="1" fontSize="10" aligmentH="hLeft" borderTop="rgba(0,0,0,255)" barcodeHeight="50" fontBold="0" barcodeFrameType="0" borderRight="rgba(0,0,0,255)" fontItalic="0" backgroundColor="rgba(255,255,255,255)" fontFamily="MS Shell Dlg 2" borderColor="rgba(0,0,0,255)" aligmentV="vCenter" fontUnderline="0" fontStrikeout="0" borderStyle="solid" borderWidth="1px" value="[barcode]" top="94" autoHeight="0" height="150" barcodeType="20" fontColor="rgba(0,0,0,255)" name="barcode" borderLeft="rgba(0,0,0,255)" width="304" groupName=""/>
+      <TContainerField left="405" borderBottom="rgba(0,0,0,255)" type="barcode" printing="1" fontSize="10" aligmentH="hLeft" borderTop="rgba(0,0,0,255)" barcodeHeight="50" fontBold="0" barcodeFrameType="0" borderRight="rgba(0,0,0,255)" fontItalic="0" backgroundColor="rgba(255,255,255,255)" fontFamily="MS Shell Dlg 2" borderColor="rgba(0,0,0,255)" aligmentV="vCenter" fontUnderline="0" fontStrikeout="0" borderStyle="solid" borderWidth="1px" value="[ticket]" top="94" autoHeight="0" height="150" barcodeType="20" fontColor="rgba(0,0,0,255)" name="barcode" borderLeft="rgba(0,0,0,255)" width="304" groupName=""/>
       <TContainerField left="100" borderBottom="rgba(255,255,255,0)" type="label" printing="1" fontSize="10" aligmentH="hLeft" format="" borderTop="rgba(255,255,255,0)" fontBold="1" borderRight="rgba(255,255,255,0)" fontItalic="0" backgroundColor="rgba(255,255,255,255)" textWrap="1" fontFamily="MS Shell Dlg 2" borderColor="rgba(0,0,0,255)" aligmentV="vCenter" fontUnderline="0" fontStrikeout="0" borderStyle="solid" borderWidth="1px" value="[row]" top="170" autoHeight="0" height="30" fontColor="rgba(0,0,0,255)" highlighting="" name="rowField" borderLeft="rgba(255,255,255,0)" width="51" groupName=""/>
       <TContainerField left="0" borderBottom="rgba(255,255,255,0)" type="label" printing="1" fontSize="10" aligmentH="hRight" format="" borderTop="rgba(255,255,255,0)" fontBold="0" borderRight="rgba(255,255,255,0)" fontItalic="0" backgroundColor="rgba(255,255,255,255)" textWrap="1" fontFamily="MS Shell Dlg 2" borderColor="rgba(0,0,0,255)" aligmentV="vCenter" fontUnderline="0" fontStrikeout="0" borderStyle="solid" borderWidth="1px" value="Ряд:" top="170" autoHeight="0" height="30" fontColor="rgba(0,0,0,255)" highlighting="" name="rowLabel" borderLeft="rgba(255,255,255,0)" width="101" groupName=""/>
       <TContainerField left="0" borderBottom="rgba(255,255,255,0)" type="label" printing="1" fontSize="10" aligmentH="hRight" format="" borderTop="rgba(255,255,255,0)" fontBold="0" borderRight="rgba(255,255,255,0)" fontItalic="0" backgroundColor="rgba(255,255,255,255)" textWrap="1" fontFamily="MS Shell Dlg 2" borderColor="rgba(0,0,0,255)" aligmentV="vCenter" fontUnderline="0" fontStrikeout="0" borderStyle="solid" borderWidth="1px" value="Место:" top="200" autoHeight="0" height="30" fontColor="rgba(0,0,0,255)" highlighting="" name="placeLabel" borderLeft="rgba(255,255,255,0)" width="101" groupName=""/>
@@ -26,115 +26,9 @@
       <TContainerField left="0" borderBottom="rgba(255,255,255,0)" type="label" printing="1" fontSize="10" aligmentH="hRight" format="" borderTop="rgba(255,255,255,0)" fontBold="0" borderRight="rgba(255,255,255,0)" fontItalic="0" backgroundColor="rgba(255,255,255,255)" textWrap="1" fontFamily="MS Shell Dlg 2" borderColor="rgba(0,0,0,255)" aligmentV="vCenter" fontUnderline="0" fontStrikeout="0" borderStyle="solid" borderWidth="1px" value="Телефон:" top="338" autoHeight="0" height="30" fontColor="rgba(0,0,0,255)" highlighting="" name="cinemaPhoneLabel" borderLeft="rgba(255,255,255,0)" width="101" groupName=""/>
       <TContainerField left="100" borderBottom="rgba(255,255,255,0)" type="label" printing="1" fontSize="10" aligmentH="hLeft" format="" borderTop="rgba(255,255,255,0)" fontBold="1" borderRight="rgba(255,255,255,0)" fontItalic="0" backgroundColor="rgba(255,255,255,255)" textWrap="1" fontFamily="MS Shell Dlg 2" borderColor="rgba(0,0,0,255)" aligmentV="vCenter" fontUnderline="0" fontStrikeout="0" borderStyle="solid" borderWidth="1px" value="[cinemaPhone]" top="338" autoHeight="0" height="30" fontColor="rgba(0,0,0,255)" highlighting="" name="cinemaPhoneField" borderLeft="rgba(255,255,255,0)" width="660" groupName=""/>
     </ReportBand>
-    <DataSource dbName="" dbConnectionName="" dbType="QSQLITE" dbPassword="" dbHost="" dbUser="" name="DB1" type="SQL" dbPort="" dbCoding="UTF8" charsetCoding="UTF8"><diagram>
-        <item y="7" x="-77" id="{1256d64a-3475-4053-b859-1d5c8e72628f}" type="database-table" name="artists">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="firstname"/>
-          <column data-type="QString" required="1" name="lastname"/>
-          <column data-type="QString" required="1" name="datofbirth"/>
-          <column data-type="QString" required="1" name="comment"/>
-          <column data-type="QByteArray" required="1" name="image"/>
-        </item>
-        <item y="7" x="-77" id="{1256d64a-3475-4053-b859-1d5c8e72628f}" type="database-table" name="artists">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="firstname"/>
-          <column data-type="QString" required="1" name="lastname"/>
-          <column data-type="QString" required="1" name="datofbirth"/>
-          <column data-type="QString" required="1" name="comment"/>
-          <column data-type="QByteArray" required="1" name="image"/>
-        </item>
-        <item y="58" x="-51" id="{bffe22a9-12d8-4e02-8044-1368d6b0b20e}" type="database-table" name="genres">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="name"/>
-        </item>
-        <item y="-130" x="122" id="{9def8e5c-0941-4c4b-875b-244ad7c9338a}" type="database-table" name="authors">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="name"/>
-          <column data-type="QString" required="0" name="birthdate"/>
-        </item>
-        <item y="-131" x="-55" id="{de7a78b2-81d2-4dc2-98ea-df72257efe8a}" type="database-table" name="books">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="title"/>
-          <column data-type="QString" required="0" name="author"/>
-          <column data-type="int" required="0" name="genre"/>
-          <column data-type="int" required="1" name="year"/>
-          <column data-type="int" required="1" name="rating"/>
-        </item>
-        <item y="7" x="-77" id="{1256d64a-3475-4053-b859-1d5c8e72628f}" type="database-table" name="artists">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="firstname"/>
-          <column data-type="QString" required="1" name="lastname"/>
-          <column data-type="QString" required="1" name="datofbirth"/>
-          <column data-type="QString" required="1" name="comment"/>
-          <column data-type="QByteArray" required="1" name="image"/>
-        </item>
-        <item y="7" x="-77" id="{1256d64a-3475-4053-b859-1d5c8e72628f}" type="database-table" name="artists">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="firstname"/>
-          <column data-type="QString" required="1" name="lastname"/>
-          <column data-type="QString" required="1" name="datofbirth"/>
-          <column data-type="QString" required="1" name="comment"/>
-          <column data-type="QByteArray" required="1" name="image"/>
-        </item>
-        <item y="58" x="-51" id="{bffe22a9-12d8-4e02-8044-1368d6b0b20e}" type="database-table" name="genres">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="name"/>
-        </item>
-        <item y="-130" x="122" id="{9def8e5c-0941-4c4b-875b-244ad7c9338a}" type="database-table" name="authors">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="name"/>
-          <column data-type="QString" required="0" name="birthdate"/>
-        </item>
-        <item y="-131" x="-55" id="{de7a78b2-81d2-4dc2-98ea-df72257efe8a}" type="database-table" name="books">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="title"/>
-          <column data-type="QString" required="0" name="author"/>
-          <column data-type="int" required="0" name="genre"/>
-          <column data-type="int" required="1" name="year"/>
-          <column data-type="int" required="1" name="rating"/>
-        </item>
-        <item y="58" x="-51" id="{bffe22a9-12d8-4e02-8044-1368d6b0b20e}" type="database-table" name="genres">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="name"/>
-        </item>
-        <item y="-130" x="122" id="{9def8e5c-0941-4c4b-875b-244ad7c9338a}" type="database-table" name="authors">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="name"/>
-          <column data-type="QString" required="0" name="birthdate"/>
-        </item>
-        <item y="-131" x="-55" id="{de7a78b2-81d2-4dc2-98ea-df72257efe8a}" type="database-table" name="books">
-          <column data-type="int" required="0" name="id"/>
-          <column data-type="QString" required="1" name="title"/>
-          <column data-type="QString" required="0" name="author"/>
-          <column data-type="int" required="0" name="genre"/>
-          <column data-type="int" required="1" name="year"/>
-          <column data-type="int" required="1" name="rating"/>
-        </item>
-        <item columns_parent="0" columns_child="2" type="database-relationship">
-          <connector y="-83" x="3" hub_owner="{de7a78b2-81d2-4dc2-98ea-df72257efe8a}" angle="0"/>
-          <connector y="-101.5" x="122" hub_owner="{9def8e5c-0941-4c4b-875b-244ad7c9338a}" angle="180"/>
-        </item>
-        <item columns_parent="0" columns_child="3" type="database-relationship">
-          <connector y="-35" x="-26" hub_owner="{de7a78b2-81d2-4dc2-98ea-df72257efe8a}" angle="270"/>
-          <connector y="58" x="-9" hub_owner="{bffe22a9-12d8-4e02-8044-1368d6b0b20e}" angle="90"/>
-        </item>
-        <item columns_parent="0" columns_child="2" type="database-relationship">
-          <connector y="-107" x="3" hub_owner="{de7a78b2-81d2-4dc2-98ea-df72257efe8a}" angle="0"/>
-          <connector y="-115.75" x="122" hub_owner="{9def8e5c-0941-4c4b-875b-244ad7c9338a}" angle="180"/>
-        </item>
-        <item columns_parent="0" columns_child="3" type="database-relationship">
-          <connector y="-35" x="-40.5" hub_owner="{de7a78b2-81d2-4dc2-98ea-df72257efe8a}" angle="270"/>
-          <connector y="58" x="-37" hub_owner="{bffe22a9-12d8-4e02-8044-1368d6b0b20e}" angle="90"/>
-        </item>
-        <item columns_parent="0" columns_child="2" type="database-relationship">
-          <connector y="-59" x="3" hub_owner="{de7a78b2-81d2-4dc2-98ea-df72257efe8a}" angle="0"/>
-          <connector y="-87.25" x="122" hub_owner="{9def8e5c-0941-4c4b-875b-244ad7c9338a}" angle="180"/>
-        </item>
-        <item columns_parent="0" columns_child="3" type="database-relationship">
-          <connector y="-35" x="-11.5" hub_owner="{de7a78b2-81d2-4dc2-98ea-df72257efe8a}" angle="270"/>
-          <connector y="58" x="-23" hub_owner="{bffe22a9-12d8-4e02-8044-1368d6b0b20e}" angle="90"/>
-        </item>
-      </diagram>
-    </DataSource>
+    <ReportBand height="57" top="40" left="40" width="760" name="RepTitleBand" type="ReportTitle"/>
+    <ReportBand height="57" top="119" left="40" width="760" name="PageHeaderBand" type="PageHeader"/>
+    <ReportBand height="57" top="198" left="40" width="760" name="MasterHeaderBand" type="MasterHeader" showInGroup="0"/>
+    <ReportBand height="57" top="749" left="40" width="760" name="MasterFooterBand" type="MasterFooter" showInGroup="0"/>
   </Report>
 </Reports>

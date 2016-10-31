@@ -361,7 +361,7 @@ bool SettingHallQML::receiveCheckedPlace(int g_place, int row)
     if(places[row][g_place].status == HallQml::StatusFree)
     {
         places[row][g_place].status = HallQml::StatusChecked;
-        emit checkedPlace(places[row][g_place].idPlace, g_place, row);
+        emit checkedPlace(places[row][g_place].idPlace, places[row][g_place].v_place, g_place, row, places[row][g_place].sectorId);
         return true;
     }
     return false;

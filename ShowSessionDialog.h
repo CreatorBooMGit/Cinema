@@ -25,7 +25,7 @@ public:
     ~ShowSessionDialog();
 
 public slots:
-    void getCheckedPlace(int id_place, int g_place, int row);
+    void getCheckedPlace(int id_place, int place, int g_place, int row, int sectorId);
     void getUncheckedPlace(int s_g_place, int s_row);
 
 private slots:
@@ -41,14 +41,24 @@ private:
 
     int indexSession;
 
+    QString nameFilm;
+    QString nameHall;
+    QString dateSession, timeSession;
+
+    QString cinemaName, cinemaAddress, cinemaPhone;
+
     struct ticket {
+        int id_ticket = 0;
         int id_place;
+        int sectorId;
+        int place;
         int g_place;
         int row;
     };
 
     QVector <ticket> tickets;
     QVector <sector> sectors;
+    QVector <double> sectorsPrice;
 
     void updateSectors();
 
