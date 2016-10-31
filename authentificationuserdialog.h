@@ -15,14 +15,10 @@ class AuthentificationUserDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AuthentificationUserDialog(QSqlQuery *q, QWidget *parent = 0);
+    explicit AuthentificationUserDialog(user *info, QSqlQuery *q, QWidget *parent = 0);
     ~AuthentificationUserDialog();
 
     void closeEvent(QCloseEvent *event);
-
-signals:
-    void sendAccessUser(user access);
-    void sendCloseDialog();
 
 private slots:
     void on_closeButton_clicked();
@@ -31,6 +27,7 @@ private slots:
 private:
     Ui::AuthentificationUserDialog *ui;
     QSqlQuery *query;
+    user *infoUser;
 };
 
 #endif // AUTHENTIFICATIONUSERDIALOG_H

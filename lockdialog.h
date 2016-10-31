@@ -21,11 +21,9 @@ public:
 
 signals:
     void sendChangeUser();
-    void sendCloseDialog();
 
 private slots:
     void on_changeButton_clicked();
-
     void on_unlockButton_clicked();
 
 private:

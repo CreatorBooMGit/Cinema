@@ -6,12 +6,12 @@
 #include <QByteArray>
 #include <QSqlError>
 
-AuthentificationUserDialog::AuthentificationUserDialog(QSqlQuery *q, QWidget *parent) :
-    QDialog(parent), query(q),
+AuthentificationUserDialog::AuthentificationUserDialog(user *info, QSqlQuery *q, QWidget *parent) :
+    QDialog(parent), query(q), infoUser(info),
     ui(new Ui::AuthentificationUserDialog)
 {
     ui->setupUi(this);
-    setWindowModality(Qt::WindowModal);
+//    setWindowModality(Qt::WindowModal);
 }
 
 AuthentificationUserDialog::~AuthentificationUserDialog()
@@ -21,8 +21,7 @@ AuthentificationUserDialog::~AuthentificationUserDialog()
 
 void AuthentificationUserDialog::closeEvent(QCloseEvent *event)
 {
-    emit sendCloseDialog();
-//    event->ignore();
+    event->ignore();
 }
 
 void AuthentificationUserDialog::on_authButton_clicked()
@@ -35,7 +34,7 @@ void AuthentificationUserDialog::on_authButton_clicked()
 //    qDebug() << QCryptographicHash::hash(password.toLatin1(), QCryptographicHash::Sha3_512).toHex();
 //    return;
     query->clear();
-    query->prepare("SELECT employees.password, employees.surname, employees.name, employees.patronymic, posts.name "
+    query->prepare("SELECT employees.id_employee, employees.password, employees.surname, employees.name AS nameE, employees.patronymic, posts.id_post, posts.name AS nameP "
                    "FROM employees, posts "
                    "WHERE employees.login = :login AND employees.post = posts.id_post");
     query->bindValue(":login", login);
@@ -52,15 +51,15 @@ void AuthentificationUserDialog::on_authButton_clicked()
         return;
     }
     query->next();
-    if(query->value(0).toString().compare(QCryptographicHash::hash(password.toLatin1(), QCryptographicHash::Sha3_512).toHex()) == 0)
+    if(query->value("password").toString().compare(QCryptographicHash::hash(password.toLatin1(), QCryptographicHash::Sha3_512).toHex()) == 0)
     {
-        user tmp;
-        tmp.login = login;
-        tmp.surname = query->value(1).toString();
-        tmp.name = query->value(2).toString();
-        tmp.patronymic = query->value(3).toString();
-        tmp.postName = query->value(4).toString();
-        emit sendAccessUser(tmp);
+        infoUser->login = login;
+        infoUser->idlogin = query->value("id_employee").toInt();
+        infoUser->surname = query->value("surname").toString();
+        infoUser->name = query->value("nameE").toString();
+        infoUser->patronymic = query->value("patronymic").toString();
+        infoUser->idpost = query->value("nameP").toInt();
+        infoUser->postName = query->value("nameP").toString();
         reject();
     }
     else
@@ -77,5 +76,5 @@ void AuthentificationUserDialog::on_authButton_clicked()
 
 void AuthentificationUserDialog::on_closeButton_clicked()
 {
-    close();
+    exit(0);
 }

@@ -6,8 +6,8 @@
 #include <QQuickView>
 #include <QDebug>
 
-ShowSessionDialog::ShowSessionDialog(int id, QSqlQuery *q, QWidget *parent) :
-    QDialog(parent), indexSession(id), query(q),
+ShowSessionDialog::ShowSessionDialog(user *info, int id, QSqlQuery *q, QWidget *parent) :
+    QDialog(parent), indexSession(id), query(q), infoUser(info),
     ui(new Ui::ShowSessionDialog)
 {
     ui->setupUi(this);
@@ -58,10 +58,13 @@ ShowSessionDialog::ShowSessionDialog(int id, QSqlQuery *q, QWidget *parent) :
                    "WHERE sectors_halls.id_sector = price_of_tickets.sector AND price_of_tickets.session = :session AND sectors_halls.hall = :hall");
     query->bindValue(":session", indexSession);
     query->bindValue(":hall", indexHall);
-    query->exec();
+    qDebug() << query->exec();
 
     while(query->next())
+    {
+        qDebug() << query->value("id_sector").toInt();
         hallCore->addSector(query->value("id_sector").toInt(), query->value("price").toString(), query->value("name").toString(), query->value("color_places").toString());
+    }
 
     sectors = hallCore->getSectors();
     for(int i = 0; i < sectors.size(); i++)
@@ -154,6 +157,15 @@ void ShowSessionDialog::on_buyButton_clicked()
         query->bindValue(":session", indexSession);
         query->bindValue(":place", tickets[i].id_place);
         query->bindValue(":status", HallQml::StatusSold);
+        query->exec();
+
+        query->prepare("INSERT INTO `traffic_tickets` (`date`, `time`, `ticket`, `operation`, `employee`) "
+                       "VALUES (:date, :time, :ticket, :operation, :employee)");
+        query->bindValue(":date", QDate::currentDate().toString("yyyy-MM-dd"));
+        query->bindValue(":time", QTime::currentTime().toString("HH:mm:ss"));
+        query->bindValue(":ticket", query->lastInsertId().toInt());
+        query->bindValue(":operation", TicketOperations::operationSold);
+        query->bindValue(":employee", infoUser->idlogin);
         query->exec();
     }
     reject();

@@ -29,7 +29,7 @@ private:
     QSqlDatabase db;
     QSqlQuery *query;
     QSettings *settings;
-    user infoUser;
+    user *infoUser;
     Access *access;
 
     QLabel *hostStatusLabel, *hostStatusIcon;
@@ -51,8 +51,6 @@ private:
 private slots:
     void authShow();
     void settShow();
-    void closeProgram();
-    void getAuthInformation(user tmp);
     void on_pushButton_clicked();
     void on_actionLogin_triggered();
     void on_actionLogout_triggered();

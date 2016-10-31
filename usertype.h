@@ -4,6 +4,8 @@
 #include <QString>
 
 struct user {
+    int idlogin;
+    int idpost;
     QString login, surname, name, patronymic, postName;
 };
 

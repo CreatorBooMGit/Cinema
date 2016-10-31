@@ -1,6 +1,8 @@
 #ifndef SHOWSESSIONDIALOG_H
 #define SHOWSESSIONDIALOG_H
 
+#include "usertype.h"
+
 #include <QDialog>
 #include <QSqlQuery>
 
@@ -10,12 +12,16 @@ namespace Ui {
 class ShowSessionDialog;
 }
 
+namespace TicketOperations {
+    enum { operationSold = 1, operationBooking = 2, operationCancellation = 3, operationReturn = 4};
+}
+
 class ShowSessionDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ShowSessionDialog(int id, QSqlQuery *q, QWidget *parent = 0);
+    explicit ShowSessionDialog(user *info, int id, QSqlQuery *q, QWidget *parent = 0);
     ~ShowSessionDialog();
 
 public slots:
@@ -30,6 +36,8 @@ private:
     Ui::ShowSessionDialog *ui;
     QSqlQuery *query;
     SettingHallQML *hallCore;
+
+    user *infoUser;
 
     int indexSession;
 

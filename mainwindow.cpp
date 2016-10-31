@@ -54,11 +54,11 @@ MainWindow::MainWindow(QWidget *parent) :
     query = new QSqlQuery(db);
     updateTable();
 #endif
+
+    infoUser = new user;
 #if AUTH >= 1
-    AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(query, this);
-    authDialog->setModal(true);
-    connect(authDialog, SIGNAL(sendCloseDialog()), this, SLOT(closeProgram()));
-    connect(authDialog, SIGNAL(sendAccessUser(user)), this, SLOT(getAuthInformation(user)));
+    AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(infoUser, query, this);
+//    authDialog->setModal(true);
     authDialog->exec();
 #endif
 
@@ -96,7 +96,7 @@ MainWindow::MainWindow(QWidget *parent) :
     hostStatusLabel->setText("<img width=\"15\" height=\"15\" src=\":/icons/icons/host.ico\"/> " + settings->value("host").toString());
     settings->endGroup();
 
-    loginStatusLabel->setText("<img width=\"15\" height=\"15\" src=\":/icons/icons/user.ico\"/> " + infoUser.login);
+    loginStatusLabel->setText("<img width=\"15\" height=\"15\" src=\":/icons/icons/user.ico\"/> " + infoUser->login);
 
     timeTimer = new QTimer(this);
     connect(timeTimer, SIGNAL(timeout()), this, SLOT(updateTimeStatusBar()));
@@ -175,35 +175,17 @@ void MainWindow::updateAccess()
 
 void MainWindow::authShow()
 {
-    AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(query, this);
-    authDialog->setModal(true);
-    connect(authDialog, SIGNAL(sendCloseDialog()), this, SLOT(closeProgram()));
-    connect(authDialog, SIGNAL(sendAccessUser(user)), this, SLOT(getAuthInformation(user)));
+    AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(infoUser, query, this);
+//    authDialog->setModal(true);
     authDialog->exec();
 }
 
 void MainWindow::settShow()
 {
-    SettingDialog *settDialog = new SettingDialog(query, access);
+    SettingDialog *settDialog = new SettingDialog(query, access, this);
     settDialog->setWindowState(Qt::WindowActive);
     settDialog->setFixedSize(642, 434);
     settDialog->exec();
-    updateAccess();
-}
-
-void MainWindow::closeProgram()
-{
-//    close();
-    exit(0);
-}
-
-void MainWindow::getAuthInformation(user tmp)
-{
-    infoUser = tmp;
-    access = new Access;
-    access->setQuery(query);
-    access->setLogin(infoUser.login);
-
     updateAccess();
 }
 
@@ -219,10 +201,8 @@ void MainWindow::on_actionLogin_triggered()
 
 void MainWindow::on_actionLogout_triggered()
 {
-    AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(query, this);
-    authDialog->setModal(true);
-    connect(authDialog, SIGNAL(sendCloseDialog()), this, SLOT(closeProgram()));
-    connect(authDialog, SIGNAL(sendAccessUser(user)), this, SLOT(getAuthInformation(user)));
+    AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(infoUser, query, this);
+//    authDialog->setModal(true);
     authDialog->exec();
 }
 
@@ -279,8 +259,7 @@ void MainWindow::on_actionUpdateSessions_triggered()
 
 void MainWindow::on_actionLock_triggered()
 {
-    LockDialog *lockDialog = new LockDialog(&infoUser.login, query, this);
-    connect(lockDialog, SIGNAL(sendCloseDialog()), this, SLOT(closeProgram()));
+    LockDialog *lockDialog = new LockDialog(&infoUser->login, query, this);
     connect(lockDialog, SIGNAL(sendChangeUser()), this, SLOT(changeUser()));
     lockDialog->exec();
     delete lockDialog;
@@ -309,10 +288,8 @@ void MainWindow::on_actionRemoveSession_triggered()
 
 void MainWindow::changeUser()
 {
-    AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(query, this);
-    authDialog->setModal(true);
-    connect(authDialog, SIGNAL(sendCloseDialog()), this, SLOT(closeProgram()));
-    connect(authDialog, SIGNAL(sendAccessUser(user)), this, SLOT(getAuthInformation(user)));
+    AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(infoUser, query, this);
+//    authDialog->setModal(true);
     authDialog->exec();
 }
 
@@ -335,7 +312,7 @@ void MainWindow::on_tableWidget_itemSelectionChanged()
 
 void MainWindow::on_tableWidget_doubleClicked(const QModelIndex &index)
 {
-    ShowSessionDialog *showSession = new ShowSessionDialog(sessions_id[ui->tableWidget->currentRow()], query, this);
+    ShowSessionDialog *showSession = new ShowSessionDialog(infoUser, sessions_id[ui->tableWidget->currentRow()], query, this);
     showSession->exec();
     delete showSession;
     //    qDebug() << index.row();
