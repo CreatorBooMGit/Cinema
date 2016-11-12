@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>306</width>
+    <width>350</width>
     <height>184</height>
    </rect>
   </property>
@@ -18,6 +18,10 @@
   </property>
   <property name="windowTitle">
    <string>Изменить фильм</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/icons/edit2.ico</normaloff>:/icons/icons/edit2.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" columnstretch="1,2">
    <property name="leftMargin">
@@ -179,6 +183,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

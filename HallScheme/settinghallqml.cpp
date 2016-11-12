@@ -219,8 +219,8 @@ void SettingHallQML::setDefaultSector()
 bool SettingHallQML::setPlace(int idPlace, int v_place, int g_place, int row, int sectorId)
 {
     if(places.size() <= 0) return false;
-    if(places.size() <= row + 1) return false;
-    if(places[row].size() <= g_place + 1) return false;
+    if(places.size() <= row) return false;
+    if(places[row].size() <= g_place) return false;
 
 //    bool cont = false;
 //    for(int i = 0; i < sectors.size(); i++)
@@ -346,7 +346,7 @@ void SettingHallQML::receiveUnCheckedPlace(int g_place, int row)
             emit sendCheckedPlace(places[row][i].v_place, i, row);
         }
 
-    places[row][g_place].status = HallQml::StatusUpdate;
+    places[row][g_place].status = HallQml::StatusFree;
     places[row][g_place].v_place = 0;
     places[row][g_place].sectorId = -1;
 }

@@ -18,11 +18,12 @@ public:
     ~AddSessionDialog();
 
 private slots:
-    void on_hallComboBox_currentIndexChanged(int index);
     void on_hallComboBox_activated(int index);
     void on_addButton_clicked();
     void on_cancelButton_clicked();
     void on_priceTable_itemChanged(QTableWidgetItem *item);
+
+    void on_filmComboBox_currentIndexChanged(int index);
 
 private:
     Ui::AddSessionDialog *ui;

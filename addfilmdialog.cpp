@@ -22,7 +22,6 @@ AddFilmDialog::~AddFilmDialog()
 void AddFilmDialog::on_confirmButton_clicked()
 {
     if(ui->nameEdit->text().isEmpty()) return;
-    if(ui->distEdit->text().isEmpty()) return;
 
     query->prepare("INSERT INTO `films` (`name`, `duration`, `start_date_of_hire`, `finish_date_of_hire`, `distributors_company`) "
                    "VALUES (:name, :duration, :start_date_of_hire, :finish_date_of_hire, :distributors_company)");

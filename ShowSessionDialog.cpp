@@ -197,7 +197,7 @@ void ShowSessionDialog::on_buyButton_clicked()
         query->bindValue(":employee", infoUser->idlogin);
         query->exec();
     }
-/*
+
     QtRPT *ticket = new QtRPT(this);
     ticket->recordCount << tickets.size();
     ticket->loadReport(":/reports/reports/ticket.xml");
@@ -241,7 +241,7 @@ void ShowSessionDialog::on_buyButton_clicked()
         }
     });
 
-    ticket->printExec(); */
+    ticket->printExec();
 
     reject();
 }

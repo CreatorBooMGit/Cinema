@@ -10,6 +10,7 @@
 #include "employeesdialog.h"
 #include "ShowInformationSession.h"
 #include "ShowSessionDialog.h"
+#include "TicketInfoDialog.h"
 #include <QDebug>
 #include <QMenu>
 #include <QMessageBox>
@@ -130,6 +131,9 @@ void MainWindow::resizeEvent(QResizeEvent *e)
 
 bool MainWindow::updateTable()
 {
+    ui->tableWidget->clearContents();
+    sessions_id.clear();
+
     QString tmp;
     tmp.push_back("SELECT sessions.id_session, films.name, sessions.date, sessions.time, halls.name "
                   "FROM sessions, films, halls "
@@ -146,16 +150,13 @@ bool MainWindow::updateTable()
     query->bindValue(":dateBefore", ui->dateFilterBefore->date().toString("yyyy-MM-dd"));
     query->bindValue(":timeBefore", ui->timeFilterFrom->time().toString("HH:mm:ss"));
     query->exec();
-    qDebug() << query->boundValues();
-    qDebug() << query->lastQuery();
     int count = query->size();
-    qDebug() << count;
     int current = 0;
     ui->tableWidget->setRowCount(count);
     while(query->next())
     {
         sessions_id.push_back(query->value(0).toInt());
-        for(int i = 1; i < 6; i++)
+        for(int i = 1; i < 5; i++)
         {
             QTableWidgetItem *item = new QTableWidgetItem(query->value(i).toString());
             item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
@@ -163,10 +164,25 @@ bool MainWindow::updateTable()
         }
         current++;
     }
+
+    for(int i = 0; i < sessions_id.size(); i++)
+    {
+        query->prepare("SELECT MIN(price), MAX(price) "
+                       "FROM price_of_tickets "
+                       "WHERE session = :session");
+        query->bindValue(":session", sessions_id[i]);
+        query->exec();
+        query->next();
+        QTableWidgetItem *item = new QTableWidgetItem(query->value(0).toString() + " - " + query->value(1).toString());
+        item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+        ui->tableWidget->setItem(i, 4, item);
+    }
 }
 
 void MainWindow::updateAccess()
 {
+    access->setLogin(infoUser->login);
+
     addSessionEnabled = access->checkAccess("addSessionEnabled");
     editSessionEnabled = access->checkAccess("editSessionEnabled");
     removeSessionEnabled = access->checkAccess("removeSessionEnabled");
@@ -327,4 +343,75 @@ void MainWindow::updateTimeStatusBar()
 {
     timeStatusLabel->setText("<img width=\"15\" height=\"15\" src=\":/icons/icons/calendar.ico\"/> " + QTime::currentTime().toString("HH:mm:ss"));
     dateStatusLabel->setText("<img width=\"15\" height=\"15\" src=\":/icons/icons/clock.ico\"/> " + QDate::currentDate().toString("dd.MM.yyyy"));
+}
+
+void MainWindow::on_actionTicketReturn_triggered()
+{
+    bool okButton;
+    int numberTicket = QInputDialog::getInt(this, tr("Возврат билета"), tr("Введите номер билета"), 0, 0, 50000000, 1, &okButton);
+
+    if(!okButton) return;
+
+    QMessageBox msgConfirmReturn;
+    msgConfirmReturn.setWindowTitle(tr("Возврат билета"));
+    msgConfirmReturn.setText(tr("Подтвердить возврат билета?"));
+    QAbstractButton *msgConfirm = msgConfirmReturn.addButton(tr("Подтвердить"), QMessageBox::YesRole);
+    msgConfirmReturn.addButton(tr("Отмена"), QMessageBox::NoRole);
+    msgConfirmReturn.exec();
+
+    if(msgConfirmReturn.clickedButton() == msgConfirm)
+    {
+        query->prepare("UPDATE `tickets` "
+                       "SET `status` = :status "
+                       "WHERE `id_ticket`= :ticket");
+        query->bindValue(":status", HallQml::StatusFree);
+        query->bindValue(":ticket", numberTicket);
+        query->exec();
+        if(query->numRowsAffected() <= 0)
+        {
+            QMessageBox msgError;
+            msgError.setWindowTitle(tr("Ошибка"));
+            msgError.setText(tr("Данного билета не существует!"));
+            msgError.setIcon(QMessageBox::Warning);
+            msgError.exec();
+            return;
+        }
+
+        query->prepare("INSERT INTO `traffic_tickets` (`date`, `time`, `ticket`, `operation`, `employee`) "
+                       "VALUES (:date, :time, :ticket, :operation, :employee)");
+        query->bindValue(":date", QDate::currentDate().toString("yyyy-MM-dd"));
+        query->bindValue(":time", QTime::currentTime().toString("HH:mm:ss"));
+        query->bindValue(":ticket", numberTicket);
+        query->bindValue(":operation", TicketOperations::operationReturn);
+        query->bindValue(":employee", infoUser->idlogin);
+        query->exec();
+    }
+}
+
+void MainWindow::on_actionTicketInfo_triggered()
+{
+    bool okButton;
+    int numberTicket = QInputDialog::getInt(this, tr("Информация про билет"), tr("Введите номер билета"), 0, 0, 50000000, 1, &okButton);
+
+    if(!okButton) return;
+
+    query->prepare("SELECT id_ticket "
+                   "FROM tickets "
+                   "WHERE id_ticket = :ticket");
+    query->bindValue(":ticket", numberTicket);
+    query->exec();
+
+    if(query->size() <= 0)
+    {
+        QMessageBox msgError;
+        msgError.setWindowTitle(tr("Ошибка"));
+        msgError.setText(tr("Данного билета не существует!"));
+        msgError.setIcon(QMessageBox::Warning);
+        msgError.exec();
+        return;
+    }
+
+    TicketInfoDialog *ticketDialog = new TicketInfoDialog(numberTicket, query, this);
+    ticketDialog->exec();
+    delete ticketDialog;
 }

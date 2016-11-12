@@ -116,6 +116,7 @@ Rectangle {
                 {
                     root.color = colorChecked;
                     root.sectorIndex = sectorIndexChecked;
+                    status = statusChecked;
                     hallCore.receiveCheckedPlace(g_place, row, sectorIndex);
                 } else
                     if(mouse.button & Qt.RightButton)
@@ -123,6 +124,7 @@ Rectangle {
                         root.color = "white";
                         root.sectorIndex = -1;
                         root.place = 0;
+                        status = statusFree;
                         hallCore.receiveUnCheckedPlace(g_place, row);
                     }
             }

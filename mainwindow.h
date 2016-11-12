@@ -68,6 +68,8 @@ private slots:
     void on_tableWidget_itemSelectionChanged();
     void on_tableWidget_doubleClicked(const QModelIndex &index);
     void updateTimeStatusBar();
+    void on_actionTicketReturn_triggered();
+    void on_actionTicketInfo_triggered();
 };
 
 #endif // MAINWINDOW_H

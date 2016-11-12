@@ -16,6 +16,10 @@
   <property name="windowTitle">
    <string>Фильмы</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/icons/film.ico</normaloff>:/icons/icons/film.ico</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>5</number>
@@ -141,6 +145,10 @@
    </item>
   </layout>
   <action name="actionAddPost">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/add2.ico</normaloff>:/icons/icons/add2.ico</iconset>
+   </property>
    <property name="text">
     <string>Добавить</string>
    </property>
@@ -149,6 +157,10 @@
    </property>
   </action>
   <action name="actionEditFilm">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/edit2.ico</normaloff>:/icons/icons/edit2.ico</iconset>
+   </property>
    <property name="text">
     <string>Изменить</string>
    </property>
@@ -157,6 +169,10 @@
    </property>
   </action>
   <action name="actionRemoveFilm">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/remove2.ico</normaloff>:/icons/icons/remove2.ico</iconset>
+   </property>
    <property name="text">
     <string>Удалить</string>
    </property>
@@ -165,6 +181,10 @@
    </property>
   </action>
   <action name="actionUpdateFilms">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/update.ico</normaloff>:/icons/icons/update.ico</iconset>
+   </property>
    <property name="text">
     <string>Обновить</string>
    </property>
@@ -173,6 +193,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

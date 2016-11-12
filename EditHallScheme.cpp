@@ -193,7 +193,7 @@ void EditHallScheme::on_confirmButton_clicked()
                     query->exec();
                 }
             else
-                    if(places[row][col].v_place == 0 && places[row][col].status == HallQml::StatusUpdate)
+                    if(places[row][col].v_place == 0 && places[row][col].status == HallQml::StatusFree)
                     {
                         query->prepare("DELETE FROM `places` "
                                        "WHERE `id_place` = :id_place");

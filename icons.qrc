@@ -20,5 +20,13 @@
         <file>icons/clock.ico</file>
         <file>icons/host.ico</file>
         <file>icons/user.ico</file>
+        <file>icons/info.ico</file>
+        <file>icons/add2.ico</file>
+        <file>icons/edit2.ico</file>
+        <file>icons/remove2.ico</file>
+        <file>icons/help.ico</file>
+        <file>icons/update.ico</file>
+        <file>icons/undo.ico</file>
+        <file>icons/video.ico</file>
     </qresource>
 </RCC>

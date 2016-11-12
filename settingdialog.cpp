@@ -6,6 +6,7 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QSqlResult>
+#include <QMenu>
 
 #include "settingdialog.h"
 #include "ui_settingdialog.h"
@@ -32,9 +33,41 @@ SettingDialog::SettingDialog(QSqlQuery *q, Access *accessCheck, QWidget *parent)
     editHallButtonEnabled = accessCheck->checkAccess("editHallEnabled");
     removeHallButtonEnabled = accessCheck->checkAccess("removeHallEnabled");
 
+    editAccessLevelEnabled = accessCheck->checkAccess("editAccessEnabled");
+
+    addPostEnabled = accessCheck->checkAccess("addPostEnabled");
+    editPostEnabled = accessCheck->checkAccess("editPostEnabled");
+    removePostEnabled = accessCheck->checkAccess("removePostEnabled");
+
     sett->addHallButton->setEnabled(addHallButtonEnabled);
-    if(sett->editHallButton->isEnabled()) sett->editHallButton->setEnabled(editHallButtonEnabled);
-    if(sett->removeHallButton->isEnabled()) sett->removeHallButton->setEnabled(removeHallButtonEnabled);
+    sett->actionAddScheme->setEnabled(addHallButtonEnabled);
+
+    sett->addPostButton->setEnabled(addPostEnabled);
+    sett->actionAddPost->setEnabled(addPostEnabled);
+
+    if(sett->editHallButton->isEnabled()) {
+        sett->editHallButton->setEnabled(editHallButtonEnabled);
+        sett->actionEditScheme->setEnabled(editHallButtonEnabled);
+    }
+    if(sett->removeHallButton->isEnabled()) {
+        sett->removeHallButton->setEnabled(removeHallButtonEnabled);
+        sett->actionRemoveScheme->setEnabled(removeHallButtonEnabled);
+    }
+
+    if(sett->editAccessLevelButton->isEnabled())
+    {
+        sett->editAccessLevelButton->setEnabled(editAccessLevelEnabled);
+        sett->actionEditAccessLevel->setEnabled(editAccessLevelEnabled);
+    }
+
+    if(sett->editPostButton->isEnabled()) {
+        sett->editPostButton->setEnabled(editPostEnabled);
+        sett->actionEditPost->setEnabled(editPostEnabled);
+    }
+    if(sett->removePostButton->isEnabled()) {
+        sett->removePostButton->setEnabled(removePostEnabled);
+        sett->actionRemovePost->setEnabled(removePostEnabled);
+    }
 
     updateHallsTable();
     updateAccessLevelTable();
@@ -270,13 +303,17 @@ void SettingDialog::on_removePostButton_clicked()
 
 void SettingDialog::on_tablePosts_itemSelectionChanged()
 {
-    sett->removePostButton->setEnabled(true);
-    sett->editPostButton->setEnabled(true);
+    sett->editPostButton->setEnabled(editPostEnabled);
+    sett->actionEditPost->setEnabled(editPostEnabled);
+
+    sett->removePostButton->setEnabled(removePostEnabled);
+    sett->actionRemovePost->setEnabled(removePostEnabled);
 }
 
 void SettingDialog::on_tableAccess_itemSelectionChanged()
 {
-    sett->editAccessLevelButton->setEnabled(true);
+    sett->editAccessLevelButton->setEnabled(editAccessLevelEnabled);
+    sett->actionEditAccessLevel->setEnabled(editAccessLevelEnabled);
 }
 
 void SettingDialog::on_editAccessLevelButton_clicked()
@@ -337,3 +374,99 @@ void SettingDialog::on_tableHalls_itemSelectionChanged()
     sett->removeHallButton->setEnabled(removeHallButtonEnabled);
 }
 
+
+void SettingDialog::on_tableHalls_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu contextTableMenu;
+    contextTableMenu.addAction(sett->actionAddScheme);
+    contextTableMenu.addAction(sett->actionEditScheme);
+    contextTableMenu.addAction(sett->actionRemoveScheme);
+    contextTableMenu.addSeparator();
+    contextTableMenu.addAction(sett->actionUpdateHalls);
+
+    QPoint globalPos;
+
+    globalPos = sett->tableHalls->mapToGlobal(pos);
+
+    contextTableMenu.exec(globalPos);
+}
+
+void SettingDialog::on_tableAccess_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu contextTableMenu;
+    contextTableMenu.addAction(sett->actionEditAccessLevel);
+    contextTableMenu.addSeparator();
+    contextTableMenu.addAction(sett->actionUpdateAccessLevels);
+
+    QPoint globalPos;
+
+    globalPos = sett->tableAccess->mapToGlobal(pos);
+
+    contextTableMenu.exec(globalPos);
+}
+
+void SettingDialog::on_tablePosts_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu contextTableMenu;
+    contextTableMenu.addAction(sett->actionAddPost);
+    contextTableMenu.addAction(sett->actionEditPost);
+    contextTableMenu.addAction(sett->actionRemovePost);
+    contextTableMenu.addSeparator();
+    contextTableMenu.addAction(sett->actionUpdatePosts);
+
+    QPoint globalPos;
+
+    globalPos = sett->tablePosts->mapToGlobal(pos);
+
+    contextTableMenu.exec(globalPos);
+}
+
+void SettingDialog::on_actionAddScheme_triggered()
+{
+    on_addHallButton_clicked();
+}
+
+void SettingDialog::on_actionEditScheme_triggered()
+{
+    on_editHallButton_clicked();
+}
+
+void SettingDialog::on_actionRemoveScheme_triggered()
+{
+    on_removeHallButton_clicked();
+}
+
+void SettingDialog::on_actionUpdateHalls_triggered()
+{
+    updateHallsTable();
+}
+
+void SettingDialog::on_actionEditAccessLevel_triggered()
+{
+    on_editAccessLevelButton_clicked();
+}
+
+void SettingDialog::on_actionUpdateAccessLevels_triggered()
+{
+    updateAccessLevelTable();
+}
+
+void SettingDialog::on_actionAddPost_triggered()
+{
+    on_addPostButton_clicked();
+}
+
+void SettingDialog::on_actionEditPost_triggered()
+{
+    on_editPostButton_clicked();
+}
+
+void SettingDialog::on_actionRemovePost_triggered()
+{
+    on_removePostButton_clicked();
+}
+
+void SettingDialog::on_actionUpdatePosts_triggered()
+{
+    updatePostsTable();
+}

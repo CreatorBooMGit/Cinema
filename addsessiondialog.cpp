@@ -24,7 +24,9 @@ AddSessionDialog::AddSessionDialog(QSqlQuery *q, QWidget *parent) :
         ui->hallComboBox->addItem(tmp.name);
     }
 
-    query->exec("SELECT id_film, name FROM films");
+    query->prepare("SELECT id_film, name "
+                   "FROM films");
+    query->exec();
     while(query->next())
     {
         film tmp;
@@ -33,6 +35,9 @@ AddSessionDialog::AddSessionDialog(QSqlQuery *q, QWidget *parent) :
         films.push_back(tmp);
         ui->filmComboBox->addItem(tmp.name);
     }
+
+    if(halls.size() > 0)
+        ui->hallComboBox->setCurrentIndex(0);
 }
 
 AddSessionDialog::~AddSessionDialog()
@@ -40,7 +45,7 @@ AddSessionDialog::~AddSessionDialog()
     delete ui;
 }
 
-void AddSessionDialog::on_hallComboBox_currentIndexChanged(int index)
+void AddSessionDialog::on_hallComboBox_activated(int index)
 {
     sectors.clear();
 
@@ -67,11 +72,6 @@ void AddSessionDialog::on_hallComboBox_currentIndexChanged(int index)
         ui->priceTable->setItem(sectors.size() - 1, 0, itemName);
         ui->priceTable->setItem(sectors.size() - 1, 1, itemPrice);
     }
-}
-
-void AddSessionDialog::on_hallComboBox_activated(int index)
-{
-    qDebug() << "actived:" << index;
 }
 
 void AddSessionDialog::on_addButton_clicked()
@@ -134,4 +134,9 @@ void AddSessionDialog::on_cancelButton_clicked()
 void AddSessionDialog::on_priceTable_itemChanged(QTableWidgetItem *item)
 {
     sectors[item->row()].price = item->text().toDouble();
+}
+
+void AddSessionDialog::on_filmComboBox_currentIndexChanged(int index)
+{
+    qDebug() << index;
 }

@@ -76,7 +76,7 @@
       </column>
       <column>
        <property name="text">
-        <string>Цена</string>
+        <string>Цена, грн.</string>
        </property>
       </column>
      </widget>
@@ -217,9 +217,13 @@
     <property name="toolTipsVisible">
      <bool>false</bool>
     </property>
-    <widget class="QMenu" name="menu">
+    <widget class="QMenu" name="menuSession">
      <property name="title">
       <string>Сеансы</string>
+     </property>
+     <property name="icon">
+      <iconset resource="icons.qrc">
+       <normaloff>:/icons/icons/video.ico</normaloff>:/icons/icons/video.ico</iconset>
      </property>
      <addaction name="actionAddSession"/>
      <addaction name="actionEditSession"/>
@@ -227,7 +231,19 @@
      <addaction name="separator"/>
      <addaction name="actionUpdateSessions"/>
     </widget>
-    <addaction name="menu"/>
+    <widget class="QMenu" name="menuTickets">
+     <property name="title">
+      <string>Билеты</string>
+     </property>
+     <property name="icon">
+      <iconset resource="icons.qrc">
+       <normaloff>:/icons/icons/ticket.ico</normaloff>:/icons/icons/ticket.ico</iconset>
+     </property>
+     <addaction name="actionTicketInfo"/>
+     <addaction name="actionTicketReturn"/>
+    </widget>
+    <addaction name="menuSession"/>
+    <addaction name="menuTickets"/>
     <addaction name="actionFilms"/>
     <addaction name="actionEmployees"/>
    </widget>
@@ -286,11 +302,19 @@
    </property>
   </action>
   <action name="actionEdit">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/edit2.ico</normaloff>:/icons/icons/edit2.ico</iconset>
+   </property>
    <property name="text">
     <string>Изменить</string>
    </property>
   </action>
   <action name="actionRemove">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/remove2.ico</normaloff>:/icons/icons/remove2.ico</iconset>
+   </property>
    <property name="text">
     <string>Удалить</string>
    </property>
@@ -305,6 +329,10 @@
    </property>
   </action>
   <action name="actionFilms">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/film.ico</normaloff>:/icons/icons/film.ico</iconset>
+   </property>
    <property name="text">
     <string>Фильмы</string>
    </property>
@@ -313,16 +341,28 @@
    </property>
   </action>
   <action name="actionHelp">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/help.ico</normaloff>:/icons/icons/help.ico</iconset>
+   </property>
    <property name="text">
     <string>Справка</string>
    </property>
   </action>
   <action name="actionAboutProgram">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/info.ico</normaloff>:/icons/icons/info.ico</iconset>
+   </property>
    <property name="text">
     <string>О программе...</string>
    </property>
   </action>
   <action name="actionAddSession">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/add2.ico</normaloff>:/icons/icons/add2.ico</iconset>
+   </property>
    <property name="text">
     <string>Добавить сеанс</string>
    </property>
@@ -331,16 +371,28 @@
    </property>
   </action>
   <action name="actionEditSession">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/edit2.ico</normaloff>:/icons/icons/edit2.ico</iconset>
+   </property>
    <property name="text">
     <string>Редактировать сеанс</string>
    </property>
   </action>
   <action name="actionRemoveSession">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/remove2.ico</normaloff>:/icons/icons/remove2.ico</iconset>
+   </property>
    <property name="text">
     <string>Удалить сеанс</string>
    </property>
   </action>
   <action name="actionUpdateSessions">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/update.ico</normaloff>:/icons/icons/update.ico</iconset>
+   </property>
    <property name="text">
     <string>Обновить</string>
    </property>
@@ -349,8 +401,30 @@
    </property>
   </action>
   <action name="actionEmployees">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/employees.ico</normaloff>:/icons/icons/employees.ico</iconset>
+   </property>
    <property name="text">
     <string>Сотрудники</string>
+   </property>
+  </action>
+  <action name="actionTicketInfo">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/info.ico</normaloff>:/icons/icons/info.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Информация о билете</string>
+   </property>
+  </action>
+  <action name="actionTicketReturn">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/undo.ico</normaloff>:/icons/icons/undo.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Возврат билета</string>
    </property>
   </action>
  </widget>

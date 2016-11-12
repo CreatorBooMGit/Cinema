@@ -26,7 +26,10 @@ private:
     Ui::SettingDialog *sett;
 
     QSqlQuery *query;
+
     bool addHallButtonEnabled, editHallButtonEnabled, removeHallButtonEnabled;
+    bool editAccessLevelEnabled;
+    bool addPostEnabled, editPostEnabled, removePostEnabled;
 
     struct hall { int id; QString name, description; int rowCount, colCount; bool enabled; };
     struct access { int id; QString name, description; };
@@ -66,6 +69,19 @@ private slots:
     void on_editHallButton_clicked();
     void on_removeHallButton_clicked();
     void on_tableHalls_itemSelectionChanged();
+    void on_tableHalls_customContextMenuRequested(const QPoint &pos);
+    void on_tableAccess_customContextMenuRequested(const QPoint &pos);
+    void on_tablePosts_customContextMenuRequested(const QPoint &pos);
+    void on_actionAddScheme_triggered();
+    void on_actionEditScheme_triggered();
+    void on_actionRemoveScheme_triggered();
+    void on_actionUpdateHalls_triggered();
+    void on_actionEditAccessLevel_triggered();
+    void on_actionUpdateAccessLevels_triggered();
+    void on_actionAddPost_triggered();
+    void on_actionEditPost_triggered();
+    void on_actionRemovePost_triggered();
+    void on_actionUpdatePosts_triggered();
 };
 
 #endif // SETTINGDIALOG_H

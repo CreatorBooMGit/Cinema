@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>649</width>
     <height>465</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Настройки</string>
   </property>
   <property name="windowIcon">
    <iconset resource="icons.qrc">
@@ -208,7 +208,7 @@
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="hallPage">
       <layout class="QGridLayout" name="gridLayout">
@@ -221,6 +221,9 @@
        </item>
        <item row="2" column="0">
         <widget class="QTableWidget" name="tableHalls">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
          <property name="autoScroll">
           <bool>true</bool>
          </property>
@@ -280,6 +283,18 @@
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QPushButton" name="addHallButton">
+           <property name="minimumSize">
+            <size>
+             <width>120</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>120</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string>Добавить</string>
            </property>
@@ -292,9 +307,34 @@
           </widget>
          </item>
          <item>
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QPushButton" name="editHallButton">
            <property name="enabled">
             <bool>false</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>120</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>120</width>
+             <height>16777215</height>
+            </size>
            </property>
            <property name="text">
             <string>Изменить</string>
@@ -305,9 +345,34 @@
           </widget>
          </item>
          <item>
+          <spacer name="horizontalSpacer_9">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QPushButton" name="removeHallButton">
            <property name="enabled">
             <bool>false</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>120</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>120</width>
+             <height>16777215</height>
+            </size>
            </property>
            <property name="text">
             <string>Удалить</string>
@@ -577,6 +642,9 @@
        </item>
        <item row="1" column="0">
         <widget class="QTableWidget" name="tableAccess">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
          <property name="horizontalScrollBarPolicy">
           <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
@@ -629,6 +697,9 @@
        </item>
        <item row="1" column="0">
         <widget class="QTableWidget" name="tablePosts">
+         <property name="contextMenuPolicy">
+          <enum>Qt::CustomContextMenu</enum>
+         </property>
          <property name="editTriggers">
           <set>QAbstractItemView::DoubleClicked|QAbstractItemView::SelectedClicked</set>
          </property>
@@ -707,6 +778,111 @@
     </widget>
    </item>
   </layout>
+  <action name="actionAddScheme">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/add2.ico</normaloff>:/icons/icons/add2.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Добавить схему</string>
+   </property>
+  </action>
+  <action name="actionEditScheme">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/edit2.ico</normaloff>:/icons/icons/edit2.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Изменить схему</string>
+   </property>
+  </action>
+  <action name="actionRemoveScheme">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/remove2.ico</normaloff>:/icons/icons/remove2.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Удалить схему</string>
+   </property>
+  </action>
+  <action name="actionUpdateHalls">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/update.ico</normaloff>:/icons/icons/update.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Обновить</string>
+   </property>
+  </action>
+  <action name="actionEditAccessLevel">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/edit2.ico</normaloff>:/icons/icons/edit2.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Изменить уровень</string>
+   </property>
+  </action>
+  <action name="actionUpdateAccessLevels">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/update.ico</normaloff>:/icons/icons/update.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Обновить</string>
+   </property>
+  </action>
+  <action name="actionAddPost">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/add2.ico</normaloff>:/icons/icons/add2.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Добавить должность</string>
+   </property>
+  </action>
+  <action name="actionEditPost">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/edit2.ico</normaloff>:/icons/icons/edit2.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Изменить должность</string>
+   </property>
+  </action>
+  <action name="actionRemovePost">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/remove2.ico</normaloff>:/icons/icons/remove2.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Удалить должность</string>
+   </property>
+  </action>
+  <action name="actionUpdatePosts">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/update.ico</normaloff>:/icons/icons/update.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Обновить</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="icons.qrc"/>

@@ -36,7 +36,7 @@ AddPostDialog::~AddPostDialog()
 
 void AddPostDialog::on_addButton_clicked()
 {
-    query->prepare("INSERT INTO `cinema`.`posts` (`name`) "
+    query->prepare("INSERT INTO `posts` (`name`) "
                    "VALUES (:name); ");
     query->bindValue(":name", ui->postEdit->text());
     if(query->exec())
@@ -46,7 +46,7 @@ void AddPostDialog::on_addButton_clicked()
         {
             if(ui->accessList->item(i)->checkState() == Qt::Checked)
             {
-                query->prepare("INSERT INTO `cinema`.`access_post` (`access`, `post`) VALUES (:access, :post)");
+                query->prepare("INSERT INTO `access_post` (`access`, `post`) VALUES (:access, :post)");
                 query->bindValue(":access", accessLevels[i].id);
                 query->bindValue(":post", idpost);
                 query->exec();

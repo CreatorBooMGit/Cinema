@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Изменить сотрудника</string>
+   <string>Изменить данные сотрудника</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/icons/edit2.ico</normaloff>:/icons/icons/edit2.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" columnstretch="1,2">
    <item row="0" column="0">
@@ -120,6 +124,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

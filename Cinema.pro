@@ -42,7 +42,9 @@ SOURCES += main.cpp\
     ShowInformationSession.cpp \
     AddHallScheme.cpp \
     EditHallScheme.cpp \
-    ShowSessionDialog.cpp
+    ShowSessionDialog.cpp \
+    TicketsDialog.cpp \
+    TicketInfoDialog.cpp
 
 HEADERS  += mainwindow.h \
     settingdialog.h \
@@ -73,7 +75,9 @@ HEADERS  += mainwindow.h \
     ShowInformationSession.h \
     AddHallScheme.h \
     EditHallScheme.h \
-    ShowSessionDialog.h
+    ShowSessionDialog.h \
+    TicketsDialog.h \
+    TicketInfoDialog.h
 
 FORMS    += mainwindow.ui \
     settingdialog.ui \
@@ -99,7 +103,9 @@ FORMS    += mainwindow.ui \
     ShowInformationSession.ui \
     AddHallScheme.ui \
     EditHallScheme.ui \
-    ShowSessionDialog.ui
+    ShowSessionDialog.ui \
+    TicketsDialog.ui \
+    TicketInfoDialog.ui
 
 RESOURCES += \
     icons.qrc \
