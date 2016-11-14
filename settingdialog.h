@@ -16,7 +16,7 @@ class SettingDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SettingDialog(QSqlQuery *q, Access *accessCheck, QWidget *parent = 0);
+    explicit SettingDialog(QSqlQuery *q, Access *a, QWidget *parent = 0);
     ~SettingDialog();
 
     void resizeEvent(QResizeEvent *event);
@@ -24,12 +24,13 @@ public:
 
 private:
     Ui::SettingDialog *sett;
-
     QSqlQuery *query;
+    Access *accessCheck;
 
-    bool addHallButtonEnabled, editHallButtonEnabled, removeHallButtonEnabled;
-    bool editAccessLevelEnabled;
-    bool addPostEnabled, editPostEnabled, removePostEnabled;
+    bool hallsEnabled, addHallButtonEnabled, editHallButtonEnabled, removeHallButtonEnabled;
+    bool serverEnabled;
+    bool accessEnabled, editAccessLevelEnabled;
+    bool postsEnabled, addPostEnabled, editPostEnabled, removePostEnabled;
 
     struct hall { int id; QString name, description; int rowCount, colCount; bool enabled; };
     struct access { int id; QString name, description; };
@@ -45,13 +46,13 @@ private:
     void updateHallsTable();
     void updateAccessLevelTable();
     void updatePostsTable();
+    void updateAccess();
 
 signals:
     void sendSettingsUpdate();
 
 private slots:
     void on_buttonSettingAccessLevel_clicked();
-    void on_buttonSettingEmployeeParametr_clicked();
     void on_buttonSettingSchem_clicked();
     void on_buttonSettingDataBase_clicked();
     void on_buttonCancel_clicked();
@@ -82,6 +83,7 @@ private slots:
     void on_actionEditPost_triggered();
     void on_actionRemovePost_triggered();
     void on_actionUpdatePosts_triggered();
+    void on_buttonSettingPosts_clicked();
 };
 
 #endif // SETTINGDIALOG_H

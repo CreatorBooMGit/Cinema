@@ -58,8 +58,9 @@ void AuthentificationUserDialog::on_authButton_clicked()
         infoUser->surname = query->value("surname").toString();
         infoUser->name = query->value("nameE").toString();
         infoUser->patronymic = query->value("patronymic").toString();
-        infoUser->idpost = query->value("nameP").toInt();
+        infoUser->idpost = query->value("id_post").toInt();
         infoUser->postName = query->value("nameP").toString();
+        setClickedCancel(false);
         reject();
     }
     else
@@ -74,7 +75,28 @@ void AuthentificationUserDialog::on_authButton_clicked()
     }
 }
 
+bool AuthentificationUserDialog::getClickedCancel() const
+{
+    return clickedCancel;
+}
+
+void AuthentificationUserDialog::setClickedCancel(bool value)
+{
+    clickedCancel = value;
+}
+
+void AuthentificationUserDialog::setExitOnCancel(bool value)
+{
+    exitOnCancel = value;
+}
+
 void AuthentificationUserDialog::on_closeButton_clicked()
 {
-    exit(0);
+    if(exitOnCancel)
+        exit(0);
+    else
+    {
+        setClickedCancel(true);
+        reject();
+    }
 }

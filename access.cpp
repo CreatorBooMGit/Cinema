@@ -49,3 +49,16 @@ bool Access::checkAccess(QString access)
         return true;
 }
 
+bool Access::checkAccess(int s_idpost, QString access)
+{
+    query->prepare("SELECT access_post.idaccess "
+                   "FROM access_post, access_level "
+                   "WHERE access_post.access = access_level.idaccess AND access_level.name = :name AND access_post.post = :post");
+    query->bindValue(":name", access);
+    query->bindValue(":post", s_idpost);
+    query->exec();
+    if(query->size() <= 0) return false;
+    else
+        return true;
+}
+

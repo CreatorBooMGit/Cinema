@@ -18,9 +18,15 @@
     <normaloff>:/icons/icons/ticket.ico</normaloff>:/icons/icons/ticket.ico</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
      <widget class="QTableWidget" name="tableWidget">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -192,7 +198,6 @@
     <property name="title">
      <string>Настройки</string>
     </property>
-    <addaction name="separator"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuAccount">
@@ -218,12 +223,18 @@
      <bool>false</bool>
     </property>
     <widget class="QMenu" name="menuSession">
+     <property name="tearOffEnabled">
+      <bool>false</bool>
+     </property>
      <property name="title">
       <string>Сеансы</string>
      </property>
      <property name="icon">
       <iconset resource="icons.qrc">
        <normaloff>:/icons/icons/video.ico</normaloff>:/icons/icons/video.ico</iconset>
+     </property>
+     <property name="separatorsCollapsible">
+      <bool>false</bool>
      </property>
      <addaction name="actionAddSession"/>
      <addaction name="actionEditSession"/>

@@ -14,6 +14,7 @@ public:
     void setLogin(QString log);
     void setQuery(QSqlQuery *q);
     bool checkAccess(QString access);
+    bool checkAccess(int s_idpost, QString access);
 
 private:
     QSqlQuery *query;

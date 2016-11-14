@@ -18,9 +18,10 @@
 #include "editaccessdialog.h"
 #include "AddHallScheme.h"
 #include "EditHallScheme.h"
+#include "authentificationuserdialog.h"
 
-SettingDialog::SettingDialog(QSqlQuery *q, Access *accessCheck, QWidget *parent) :
-    QDialog(parent), query(q),
+SettingDialog::SettingDialog(QSqlQuery *q, Access *a, QWidget *parent) :
+    QDialog(parent), query(q), accessCheck(a),
     sett(new Ui::SettingDialog)
 {
     sett->setupUi(this);
@@ -29,46 +30,7 @@ SettingDialog::SettingDialog(QSqlQuery *q, Access *accessCheck, QWidget *parent)
 
     settingRead("settingUser.ini");
 
-    addHallButtonEnabled = accessCheck->checkAccess("addHallEnabled");
-    editHallButtonEnabled = accessCheck->checkAccess("editHallEnabled");
-    removeHallButtonEnabled = accessCheck->checkAccess("removeHallEnabled");
-
-    editAccessLevelEnabled = accessCheck->checkAccess("editAccessEnabled");
-
-    addPostEnabled = accessCheck->checkAccess("addPostEnabled");
-    editPostEnabled = accessCheck->checkAccess("editPostEnabled");
-    removePostEnabled = accessCheck->checkAccess("removePostEnabled");
-
-    sett->addHallButton->setEnabled(addHallButtonEnabled);
-    sett->actionAddScheme->setEnabled(addHallButtonEnabled);
-
-    sett->addPostButton->setEnabled(addPostEnabled);
-    sett->actionAddPost->setEnabled(addPostEnabled);
-
-    if(sett->editHallButton->isEnabled()) {
-        sett->editHallButton->setEnabled(editHallButtonEnabled);
-        sett->actionEditScheme->setEnabled(editHallButtonEnabled);
-    }
-    if(sett->removeHallButton->isEnabled()) {
-        sett->removeHallButton->setEnabled(removeHallButtonEnabled);
-        sett->actionRemoveScheme->setEnabled(removeHallButtonEnabled);
-    }
-
-    if(sett->editAccessLevelButton->isEnabled())
-    {
-        sett->editAccessLevelButton->setEnabled(editAccessLevelEnabled);
-        sett->actionEditAccessLevel->setEnabled(editAccessLevelEnabled);
-    }
-
-    if(sett->editPostButton->isEnabled()) {
-        sett->editPostButton->setEnabled(editPostEnabled);
-        sett->actionEditPost->setEnabled(editPostEnabled);
-    }
-    if(sett->removePostButton->isEnabled()) {
-        sett->removePostButton->setEnabled(removePostEnabled);
-        sett->actionRemovePost->setEnabled(removePostEnabled);
-    }
-
+    updateAccess();
     updateHallsTable();
     updateAccessLevelTable();
     updatePostsTable();
@@ -219,6 +181,43 @@ void SettingDialog::updatePostsTable()
     }
 }
 
+void SettingDialog::updateAccess()
+{
+    hallsEnabled = accessCheck->checkAccess("hallsEnabled");
+    addHallButtonEnabled = accessCheck->checkAccess("addHallEnabled");
+    editHallButtonEnabled = accessCheck->checkAccess("editHallEnabled");
+    removeHallButtonEnabled = accessCheck->checkAccess("removeHallEnabled");
+
+    serverEnabled = accessCheck->checkAccess("serverEnabled");
+
+    accessEnabled = accessCheck->checkAccess("accessEnabled");
+    editAccessLevelEnabled = accessCheck->checkAccess("editAccessEnabled");
+
+    postsEnabled = accessCheck->checkAccess("postsEnabled");
+    addPostEnabled = accessCheck->checkAccess("addPostEnabled");
+    editPostEnabled = accessCheck->checkAccess("editPostEnabled");
+    removePostEnabled = accessCheck->checkAccess("removePostEnabled");
+
+    if(!hallsEnabled)
+        sett->hallPage->setVisible(hallsEnabled);
+    sett->buttonSettingSchem->setVisible(hallsEnabled);
+    sett->addHallButton->setEnabled(addHallButtonEnabled);
+    sett->actionAddScheme->setEnabled(addHallButtonEnabled);
+
+    if(!serverEnabled)
+        sett->databasePage->setVisible(serverEnabled);
+
+    if(!accessEnabled)
+        sett->accessLevelPage->setVisible(accessEnabled);
+    sett->buttonSettingAccessLevel->setVisible(accessEnabled);
+
+    if(!postsEnabled)
+        sett->postsPage->setVisible(postsEnabled);
+    sett->buttonSettingPosts->setVisible(postsEnabled);
+    sett->addPostButton->setEnabled(addPostEnabled);
+    sett->actionAddPost->setEnabled(addPostEnabled);
+}
+
 void SettingDialog::on_buttonSettingSchem_clicked()
 {
     sett->stackedWidget->setCurrentIndex(0);
@@ -226,19 +225,31 @@ void SettingDialog::on_buttonSettingSchem_clicked()
 
 void SettingDialog::on_buttonSettingDataBase_clicked()
 {
-    sett->stackedWidget->setCurrentIndex(1);
+    if(serverEnabled)
+        sett->stackedWidget->setCurrentIndex(1);
+    else
+    {
+        user *infoUser = new user;
+        AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(infoUser, query, this);
+        authDialog->setExitOnCancel(false);
+        authDialog->exec();
+        if(authDialog->getClickedCancel() == false)
+        {
+            serverEnabled = accessCheck->checkAccess(infoUser->idpost, "serverEnabled");
+            delete authDialog;
+            on_buttonSettingDataBase_clicked();
+        }
+        else
+        {
+            delete authDialog;
+        }
+    }
 }
 
 void SettingDialog::on_buttonSettingAccessLevel_clicked()
 {
     sett->stackedWidget->setCurrentIndex(2);
 }
-
-void SettingDialog::on_buttonSettingEmployeeParametr_clicked()
-{
-    sett->stackedWidget->setCurrentIndex(3);
-}
-
 
 void SettingDialog::on_buttonCancel_clicked()
 {
@@ -469,4 +480,9 @@ void SettingDialog::on_actionRemovePost_triggered()
 void SettingDialog::on_actionUpdatePosts_triggered()
 {
     updatePostsTable();
+}
+
+void SettingDialog::on_buttonSettingPosts_clicked()
+{
+    sett->stackedWidget->setCurrentIndex(3);
 }

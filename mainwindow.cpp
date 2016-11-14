@@ -59,12 +59,12 @@ MainWindow::MainWindow(QWidget *parent) :
     infoUser = new user;
 #if AUTH >= 1
     AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(infoUser, query, this);
-//    authDialog->setModal(true);
     authDialog->exec();
     delete authDialog;
+    access = new Access(infoUser->login, query);
+    updateAccess();
 #endif
 
-    access = new Access(infoUser->login, query);
 
     connect(ui->actionSettings, SIGNAL(triggered()), this, SLOT(settShow()));
 
@@ -186,10 +186,22 @@ void MainWindow::updateAccess()
     addSessionEnabled = access->checkAccess("addSessionEnabled");
     editSessionEnabled = access->checkAccess("editSessionEnabled");
     removeSessionEnabled = access->checkAccess("removeSessionEnabled");
+
+    ui->menuSession->menuAction()->setVisible(access->checkAccess("sessionsEnabled"));
+    ui->menuTickets->menuAction()->setVisible(access->checkAccess("ticketsEnabled"));
     ui->actionEmployees->setVisible(access->checkAccess("employeesEnabled"));
     ui->actionFilms->setVisible(access->checkAccess("filmsEnabled"));
 
-    ui->menuData->setEnabled(ui->actionEmployees->isVisible() && ui->actionFilms->isVisible());
+    ui->actionAddSession->setVisible(access->checkAccess("addSessionEnabled"));
+    ui->actionEditSession->setVisible(access->checkAccess("editSessionEnabled"));
+    ui->actionRemoveSession->setVisible(access->checkAccess("removeSessionEnabled"));
+
+    ui->actionTicketInfo->setVisible(access->checkAccess("ticketInfoEnabled"));
+    ui->actionTicketReturn->setVisible(access->checkAccess("ticketReturnEnabled"));
+
+    ui->centralWidget->setVisible(access->checkAccess("sessionsEnabled"));
+
+    ui->menuData->menuAction()->setVisible(ui->menuSession->isVisible() || ui->menuTickets->isVisible() || ui->actionEmployees->isVisible() || ui->actionFilms->isVisible());
 }
 
 void MainWindow::authShow()
@@ -197,6 +209,7 @@ void MainWindow::authShow()
     AuthentificationUserDialog *authDialog = new AuthentificationUserDialog(infoUser, query, this);
 //    authDialog->setModal(true);
     authDialog->exec();
+    updateAccess();
 }
 
 void MainWindow::settShow()
@@ -224,6 +237,7 @@ void MainWindow::on_actionLogout_triggered()
 //    authDialog->setModal(true);
     authDialog->exec();
     delete authDialog;
+    updateAccess();
     loginStatusLabel->setText("<img width=\"15\" height=\"15\" src=\":/icons/icons/user.ico\"/> " + infoUser->login);
 }
 
@@ -233,7 +247,8 @@ void MainWindow::onTableContextMenu(QPoint p)
     contextTableMenu.addAction(ui->actionAddSession);
     contextTableMenu.addAction(ui->actionEditSession);
     contextTableMenu.addAction(ui->actionRemoveSession);
-    contextTableMenu.addSeparator();
+    if(ui->actionAddSession->isVisible() || ui->actionEditSession->isVisible() || ui->actionRemoveSession->isVisible())
+        contextTableMenu.addSeparator();
     contextTableMenu.addAction(ui->actionUpdateSessions);
 
     QPoint globalPos;

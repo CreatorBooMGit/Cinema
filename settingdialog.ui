@@ -108,7 +108,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QCommandLinkButton" name="buttonSettingEmployeeParametr">
+      <widget class="QCommandLinkButton" name="buttonSettingPosts">
        <property name="text">
         <string>Должности</string>
        </property>
